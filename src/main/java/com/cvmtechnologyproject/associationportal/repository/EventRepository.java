@@ -2,8 +2,7 @@ package com.cvmtechnologyproject.associationportal.repository;
 
 import com.cvmtechnologyproject.associationportal.model.Event;
 import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.stereotype.Repository;
+import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 
-@Repository
-public interface EventRepository extends JpaRepository<Event, Long> {
+public interface EventRepository extends JpaRepository<Event, Long>, JpaSpecificationExecutor<Event> {
 }

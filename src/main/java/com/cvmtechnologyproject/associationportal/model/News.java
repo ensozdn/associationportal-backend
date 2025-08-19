@@ -1,14 +1,19 @@
 package com.cvmtechnologyproject.associationportal.model;
 
-import jakarta.persistence.DiscriminatorValue;
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
-import lombok.Data;
-import lombok.EqualsAndHashCode;
+import lombok.Getter;
+import lombok.Setter;
 
-@Data
-@EqualsAndHashCode(callSuper = true)
 @Entity
-@DiscriminatorValue("NEWS")
+@Getter
+@Setter
 public class News extends Event {
+
+    @Column(name = "news_url")
     private String newsUrl;
+
+    public News() {
+        this.setType(EventType.NEWS); //  Enum otomatik set ediliyor
+    }
 }

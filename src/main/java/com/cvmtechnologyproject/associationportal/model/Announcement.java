@@ -1,15 +1,19 @@
 package com.cvmtechnologyproject.associationportal.model;
 
-import jakarta.persistence.DiscriminatorValue;
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
-import lombok.Data;
-import lombok.EqualsAndHashCode;
+import lombok.Getter;
+import lombok.Setter;
 
-@Data
-@EqualsAndHashCode(callSuper = true)
 @Entity
-@DiscriminatorValue("ANNOUNCEMENT")
+@Getter
+@Setter
 public class Announcement extends Event {
 
+    @Column(name = "image_path")
     private String imagePath;
+
+    public Announcement() {
+        this.setType(EventType.ANNOUNCEMENT); //  Enum otomatik set ediliyor
+    }
 }

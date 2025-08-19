@@ -3,27 +3,25 @@ package com.cvmtechnologyproject.associationportal.strategy;
 import com.cvmtechnologyproject.associationportal.model.EventType;
 import org.springframework.stereotype.Component;
 
-import java.util.EnumMap;
-import java.util.Map;
-
 @Component
 public class EventStrategyFactory {
 
-    private final Map<EventType, EventStrategy> strategyMap = new EnumMap<>(EventType.class);
+    private final AnnouncementStrategy announcementStrategy;
+    private final NewsStrategy newsStrategy;
 
-    public EventStrategyFactory(
-            NewsStrategy newsStrategy,
-            AnnouncementStrategy announcementStrategy
-    ) {
-        strategyMap.put(EventType.NEWS, newsStrategy);
-        strategyMap.put(EventType.ANNOUNCEMENT, announcementStrategy);
+    public EventStrategyFactory(AnnouncementStrategy announcementStrategy,
+                                NewsStrategy newsStrategy) {
+        this.announcementStrategy = announcementStrategy;
+        this.newsStrategy = newsStrategy;
     }
 
-    public EventStrategy getStrategy(EventType type) {
-        EventStrategy strategy = strategyMap.get(type);
-        if (strategy == null) {
-            throw new IllegalArgumentException("No strategy found for event type: " + type);
+    public EventStrategy get(EventType type) {
+        if (type == null) {
+            throw new IllegalArgumentException("Event type is required");
         }
-        return strategy;
+        return switch (type) {
+            case ANNOUNCEMENT -> announcementStrategy;
+            case NEWS -> newsStrategy;
+        };
     }
 }

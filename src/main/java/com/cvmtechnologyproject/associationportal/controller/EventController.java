@@ -2,10 +2,15 @@ package com.cvmtechnologyproject.associationportal.controller;
 
 import com.cvmtechnologyproject.associationportal.model.Event;
 import com.cvmtechnologyproject.associationportal.service.EventService;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.web.PageableDefault;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
+import org.springframework.data.domain.Pageable;
 import java.util.List;
 
+@CrossOrigin(origins = "http://localhost:3000")
 @RestController
 @RequestMapping("/api/events")
 public class EventController {
@@ -16,23 +21,46 @@ public class EventController {
         this.eventService = eventService;
     }
 
-    @PostMapping
-    public Event createEvent(@RequestBody Event event) {
-        return eventService.saveEvent(event);
+    // CREATE
+    @PostMapping(consumes = "application/json", produces = "application/json")
+    public ResponseEntity<Event> createEvent(@RequestBody Event event) {
+        Event saved = eventService.createEvent(event);
+        return ResponseEntity.status(201).body(saved);
     }
 
-    @GetMapping
+    // READ - list
+    @GetMapping(produces = "application/json")
     public List<Event> getAllEvents() {
         return eventService.getAllEvents();
     }
 
-    @GetMapping("/{id}")
+    // READ - single
+    @GetMapping(value = "/{id}", produces = "application/json")
     public Event getEventById(@PathVariable Long id) {
         return eventService.getEventById(id);
     }
 
-    @DeleteMapping("/{id}")
-    public void deleteEvent(@PathVariable Long id) {
-        eventService.deleteEvent(id);
+    // UPDATE
+    @PutMapping(value = "/{id}", consumes = "application/json", produces = "application/json")
+    public ResponseEntity<Event> updateEvent(@PathVariable Long id, @RequestBody Event event) {
+        Event updated = eventService.updateEvent(id, event);
+        return ResponseEntity.ok(updated);
     }
+
+    // DELETE
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> deleteEvent(@PathVariable Long id) {
+        eventService.deleteEvent(id);
+        return ResponseEntity.noContent().build();
+    }
+
+    @GetMapping(value = "/search", produces = "application/json")
+    public Page<Event> searchEvents(
+            @RequestParam(required = false) String type,
+            @RequestParam(required = false, name = "q") String keyword,
+            @PageableDefault(sort = "id", direction = Sort.Direction.DESC) Pageable pageable
+    ) {
+        return eventService.search(type, keyword, pageable);
+    }
+
 }

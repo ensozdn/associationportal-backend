@@ -1,35 +1,47 @@
 package com.cvmtechnologyproject.associationportal.model;
 
+import com.fasterxml.jackson.annotation.JsonAlias;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonSubTypes;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import jakarta.persistence.*;
-import lombok.Data;
-import jakarta.persistence.Enumerated;
-import jakarta.persistence.EnumType;
+import lombok.*;
 
 import java.time.LocalDate;
 
-@Data
 @Entity
+@Table(name = "event")
 @Inheritance(strategy = InheritanceType.SINGLE_TABLE)
-@DiscriminatorColumn(name = "event_type")
 @JsonTypeInfo(
         use = JsonTypeInfo.Id.NAME,
         include = JsonTypeInfo.As.PROPERTY,
-        property = "type"
+        property = "eventClass" // Alt sınıf seçiminde kullanılacak alan
 )
 @JsonSubTypes({
-        @JsonSubTypes.Type(value = News.class, name = "NEWS"),
+        @JsonSubTypes.Type(value = News.class,         name = "NEWS"),
         @JsonSubTypes.Type(value = Announcement.class, name = "ANNOUNCEMENT")
 })
+@Getter
+@Setter
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
 public abstract class Event {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
+    //  Enum artık "type" alanına bağlı
     @Enumerated(EnumType.STRING)
+    @Column(name = "event_type", nullable = false)
+    @JsonProperty("type")           // JSON'da "type" - buraya maplenecek
+    @JsonAlias({"eventType"})       // "eventType" gelirse de kabul et
     private EventType type;
+
+    @Column(nullable = false)
     private String subject;
+
+    @Column(nullable = false, length = 4000)
     private String content;
+
     private LocalDate validUntil;
 }

@@ -1,25 +1,39 @@
 package com.cvmtechnologyproject.associationportal.strategy;
 
-import com.cvmtechnologyproject.associationportal.model.News;
 import com.cvmtechnologyproject.associationportal.model.Event;
+import com.cvmtechnologyproject.associationportal.model.News;
 import org.springframework.stereotype.Component;
 
 @Component
 public class NewsStrategy implements EventStrategy {
 
     @Override
-    public void process(Event event) {
+    public void process(Event e) {
+        // Sadece News işlenir
+        if (!(e instanceof News n)) {
+            throw new IllegalArgumentException("NewsStrategy can only process News events");
+        }
 
-        if (!(event instanceof News news)) {
-            throw new IllegalArgumentException("Invalid event type for NewsStrategy");
+        // Ortak zorunlular
+        if (n.getSubject() == null || n.getSubject().isBlank()) {
+            throw new IllegalArgumentException("Subject is required");
+        }
+        if (n.getContent() == null || n.getContent().isBlank()) {
+            throw new IllegalArgumentException("Content is required");
+        }
+
+        // NEWS'e özel: URL zorunlu
+        if (n.getNewsUrl() == null || n.getNewsUrl().isBlank()) {
+            throw new IllegalArgumentException("News URL is required");
         }
 
 
-        // Buraya News'e özel kurallar yazılır
-        if (news.getNewsUrl() == null || news.getNewsUrl().isBlank()) {
-            throw new IllegalArgumentException("News URL cannot be empty.");
-        }
+        n.setValidUntil(null);     // Event üzerinden var; kalabilir
+        // n.setImagePath(null);   // <-- YOK; bu satırı kaldırdık
 
-        System.out.println("Processed News Event: " + news.getSubject());
+        // Normalize (trim)
+        n.setSubject(n.getSubject().trim());
+        n.setContent(n.getContent().trim());
+        n.setNewsUrl(n.getNewsUrl().trim());
     }
 }

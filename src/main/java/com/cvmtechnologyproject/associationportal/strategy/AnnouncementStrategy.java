@@ -1,23 +1,36 @@
 package com.cvmtechnologyproject.associationportal.strategy;
 
-import com.cvmtechnologyproject.associationportal.model.Announcement;
 import com.cvmtechnologyproject.associationportal.model.Event;
+import com.cvmtechnologyproject.associationportal.model.Announcement;
 import org.springframework.stereotype.Component;
+
+import java.time.LocalDate;
 
 @Component
 public class AnnouncementStrategy implements EventStrategy {
 
     @Override
-    public void process(Event event) {
-        if (!(event instanceof Announcement announcement)) {
-            throw new IllegalArgumentException("Invalid event type for AnnouncementStrategy");
+    public void process(Event e) {
+        // Ortak zorunlu alanlar
+        if (e.getSubject() == null || e.getSubject().isBlank()) {
+            throw new IllegalArgumentException("Subject is required");
+        }
+        if (e.getContent() == null || e.getContent().isBlank()) {
+            throw new IllegalArgumentException("Content is required");
         }
 
-        // Duyuruya özel kurallar
-        if (announcement.getImagePath() == null || announcement.getImagePath().isBlank()) {
-            throw new IllegalArgumentException("Image path cannot be empty.");
-        }
+        // Alt tipe özel alanlar (Announcement)
+        if (e instanceof Announcement a) {
+            // Görsel yolu opsiyonel → boş string geldiyse null yap
+            if (a.getImagePath() != null && a.getImagePath().isBlank()) {
+                a.setImagePath(null);
+            }
 
-        System.out.println("Processed Announcement Event: " + announcement.getSubject());
+            // Geçerlilik tarihi opsiyonel → varsa geçmiş olamaz
+            LocalDate valid = a.getValidUntil();
+            if (valid != null && valid.isBefore(LocalDate.now())) {
+                throw new IllegalArgumentException("Valid until date cannot be in the past");
+            }
+        }
     }
 }
