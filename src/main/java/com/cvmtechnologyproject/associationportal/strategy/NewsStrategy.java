@@ -4,6 +4,11 @@ import com.cvmtechnologyproject.associationportal.model.Event;
 import com.cvmtechnologyproject.associationportal.model.News;
 import org.springframework.stereotype.Component;
 
+
+//NewsStrategy, News tipi Event’ler için özel validasyon + normalization yapar.
+//	•	Ortak kurallar (subject/content) + özel kurallar (newsUrl zorunlu).
+//	•	DB’ye kaydedilmeden önce tüm bu kurallar uygulanır.
+
 @Component
 public class NewsStrategy implements EventStrategy {
 
@@ -28,8 +33,8 @@ public class NewsStrategy implements EventStrategy {
         }
 
 
-        n.setValidUntil(null);     // Event üzerinden var; kalabilir
-        // n.setImagePath(null);   // <-- YOK; bu satırı kaldırdık
+        n.setValidUntil(null);     // Event üzerinden var, kalabilir
+        // n.setImagePath(null);   // <-- bu satırı kaldırdık
 
         // Normalize (trim)
         n.setSubject(n.getSubject().trim());

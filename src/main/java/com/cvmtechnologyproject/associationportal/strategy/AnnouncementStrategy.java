@@ -6,6 +6,12 @@ import org.springframework.stereotype.Component;
 
 import java.time.LocalDate;
 
+//Strategy pattern sayesinde:
+//	•	AnnouncementStrategy → duyurular
+//	•	NewsStrategy → haberler
+//	•	ConferenceStrategy → konferanslar
+//… gibi gibi ayrı ayrı yönetilebilir.
+
 @Component
 public class AnnouncementStrategy implements EventStrategy {
 

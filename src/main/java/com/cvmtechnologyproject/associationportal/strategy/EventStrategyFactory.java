@@ -3,6 +3,13 @@ package com.cvmtechnologyproject.associationportal.strategy;
 import com.cvmtechnologyproject.associationportal.model.EventType;
 import org.springframework.stereotype.Component;
 
+//Bu sınıf Strategy Pattern’in fabrika (factory) kısmı.
+//	•	İş mantığında if (type == ANNOUNCEMENT) gibi dağınık kontroller yazmaya gerek kalmaz.
+//	•	Yeni EventType eklenirse:
+//	1.	Yeni Strategy sınıfı yazılır.
+//	2.	Burada switch’e eklenir.
+//→ Mevcut kod bozulmaz.
+
 @Component
 public class EventStrategyFactory {
 

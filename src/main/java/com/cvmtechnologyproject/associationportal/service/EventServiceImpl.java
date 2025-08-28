@@ -18,6 +18,8 @@ import java.util.List;
 import static com.cvmtechnologyproject.associationportal.service.EventSpecifications.hasType;
 import static com.cvmtechnologyproject.associationportal.service.EventSpecifications.keywordLike;
 
+//event iş mantığının kalbi  CRUD + Strategy Pattern + Specification API.
+
 @Service
 public class EventServiceImpl implements EventService {
 
@@ -33,7 +35,7 @@ public class EventServiceImpl implements EventService {
     /** Create: Strategy → save */
     @Override
     public Event saveEvent(Event event) {
-        // Tipe göre validasyon/zenginleştirme
+        // Tipe göre validasyon
         eventStrategyFactory.get(event.getType()).process(event);
         return eventRepository.save(event);
     }
