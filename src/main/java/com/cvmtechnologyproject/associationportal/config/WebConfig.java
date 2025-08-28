@@ -7,6 +7,9 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 
+//	Hızlı geliştirme: Yüklenen dosya anında URL’den görülebilir.
+//	Basit entegrasyon: Frontend, medyayı /uploads/... ile doğrudan çeker.
+
 @Configuration
 public class WebConfig implements WebMvcConfigurer {
 

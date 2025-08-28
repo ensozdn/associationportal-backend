@@ -7,10 +7,13 @@ import org.springframework.stereotype.Component;
 import java.time.LocalDate;
 
 //Strategy pattern sayesinde:
-//	•	AnnouncementStrategy → duyurular
-//	•	NewsStrategy → haberler
-//	•	ConferenceStrategy → konferanslar
-//… gibi gibi ayrı ayrı yönetilebilir.
+//		AnnouncementStrategy → duyurular
+//		NewsStrategy → haberler
+//		ConferenceStrategy → konferanslar
+//…     gibi gibi ayrı ayrı yönetilebilir.
+//		AnnouncementStrategy → Announcement tipindeki Event için özel validasyon ve veri temizleme kuralları.
+//		Ortak kurallar (subject, content) + alt tipe özgü kurallar (imagePath, validUntil).
+//		Strategy Pattern → Yeni Event tipleri eklenebilir, mevcut kod bozulmaz.
 
 @Component
 public class AnnouncementStrategy implements EventStrategy {

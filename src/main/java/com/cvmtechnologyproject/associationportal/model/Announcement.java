@@ -5,6 +5,10 @@ import jakarta.persistence.Entity;
 import lombok.Getter;
 import lombok.Setter;
 
+//	Announcement sınıfı → veritabanında announcement tablosunu temsil eder.
+//	Alanlar → id, title, content, author, createdAt.
+//	Basit bir duyuru sistemi için yeterli.
+
 @Entity
 @Getter
 @Setter

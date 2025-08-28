@@ -5,9 +5,13 @@ import com.cvmtechnologyproject.associationportal.model.News;
 import org.springframework.stereotype.Component;
 
 
-//NewsStrategy, News tipi Event’ler için özel validasyon + normalization yapar.
-//	•	Ortak kurallar (subject/content) + özel kurallar (newsUrl zorunlu).
-//	•	DB’ye kaydedilmeden önce tüm bu kurallar uygulanır.
+//  NewsStrategy, News tipi Event’ler için özel validasyon + normalization yapar.
+//	Ortak kurallar (subject/content) + özel kurallar (newsUrl zorunlu).
+//	DB’ye kaydedilmeden önce tüm bu kurallar uygulanır.
+//	NewsStrategy → Haber Event’leri için strateji sınıfı.
+//	Kurallar: subject, content, newsUrl boş olamaz.
+//	validUntil kullanılmaz → null set edilir.
+//	Tüm alanlar trim’lenir → temiz veri.
 
 @Component
 public class NewsStrategy implements EventStrategy {

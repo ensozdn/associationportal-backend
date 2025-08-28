@@ -9,6 +9,10 @@ import lombok.*;
 
 import java.time.LocalDate;
 
+//	Event → Etkinlik tablosunu temsil eden entity.
+//	Alanlar: id, title, description, location, date, type.
+//	Spring Data JPA ile repository üzerinden CRUD yapılır.
+
 @Entity
 @Table(name = "event")
 @Inheritance(strategy = InheritanceType.SINGLE_TABLE)

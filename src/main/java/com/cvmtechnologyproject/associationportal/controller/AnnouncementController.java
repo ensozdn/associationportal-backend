@@ -11,6 +11,9 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 
+//	Dış dünyaya REST endpointleri sağlar: Listele, Oluştur, Sil.
+//	İş mantığını servis katmanına yönlendirir (SRP: Single Responsibility Principle).
+
 @RestController
 @RequestMapping("/api/announcements")
 public class AnnouncementController {

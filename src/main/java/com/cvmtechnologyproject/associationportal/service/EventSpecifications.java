@@ -2,7 +2,9 @@ package com.cvmtechnologyproject.associationportal.service;
 
 import com.cvmtechnologyproject.associationportal.model.Event;
 import org.springframework.data.jpa.domain.Specification;
+
 //filtreleme search sistemi içinde kullanılıyor dinamik esnek arama sağlar
+
 public class EventSpecifications {
 
     public static Specification<Event> hasType(String type) {

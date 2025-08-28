@@ -6,6 +6,14 @@ import org.springframework.data.domain.Pageable;
 
 import java.util.List;
 
+
+//	•	EventService → Controller ile Repository arasındaki iş mantığını tanımlayan interface.
+//	•	Sağladığı şeyler:
+//	•	Basit CRUD
+//	•	Strategy pattern ile gelişmiş kayıt
+//	•	Sayfalama + filtreleme arama
+
+
 public interface EventService {
 
     // Create akışını Strategy + save ile yapan yardımcı

@@ -5,6 +5,9 @@ import jakarta.persistence.Entity;
 import lombok.Getter;
 import lombok.Setter;
 
+//	News → veritabanında news tablosunu temsil eder.
+//	Alanlar: id, title, content, author, createdAt.
+
 @Entity
 @Getter
 @Setter

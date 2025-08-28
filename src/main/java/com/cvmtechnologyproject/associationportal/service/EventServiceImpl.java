@@ -19,6 +19,15 @@ import static com.cvmtechnologyproject.associationportal.service.EventSpecificat
 import static com.cvmtechnologyproject.associationportal.service.EventSpecifications.keywordLike;
 
 //event iş mantığının kalbi  CRUD + Strategy Pattern + Specification API.
+//	EventServiceImpl → Event iş mantığının kalbi.
+//	CRUD + Strategy Pattern + Specification API.
+//	Güçlü: Farklı Event tipleri polymorphism ile yönetiliyor.
+//	REST best practice (404, 400, 204 gibi doğru HTTP kodları).
+//	Create → Strategy + Save.
+//	Read → CRUD + exception handling.
+//	Update → Null olmayan alanları güncelle + tip değişimi yasak + alt tip alanları destekle.
+//	Delete → Yoksa 404, varsa sil.
+//	Search → Dinamik, specification tabanlı.
 
 @Service
 public class EventServiceImpl implements EventService {
